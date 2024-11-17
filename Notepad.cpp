@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <conio.h>
 
 Notepad::Notepad() = default;
 
@@ -82,7 +83,11 @@ void Notepad::loadFile(const string& filename) {
         return;
     }
 
+    notepadHistory.push(listToString());
+    wordHistory.push(queueToString());
+
     list.delList();
+    word.clear();
 
     char ch;
     while (file.get(ch)) {
@@ -111,15 +116,140 @@ void Notepad::saveFile() {
 }
 
 void Notepad::undo() {
+    if (!notepadHistory.isEmpty() && !wordHistory.isEmpty()) {
+        auto lastNotepadState = notepadHistory.peek();
+        auto lastWordHistory = wordHistory.peek();
 
+        notepadHistory.pop();
+        wordHistory.pop();
+
+        list.delList();
+
+        for (char ch : lastNotepadState) {
+            list.insertAtEnd(ch);
+        }
+
+        stringToQueue(lastWordHistory);
+    }
 }
 
 void Notepad::deleteLast() {
+    if (!list.isEmpty()) {
+        notepadHistory.push(listToString());
+        wordHistory.push(queueToString());
 
+        list.deleteFromEnd();
+
+        if (word.isEmpty()) {
+            Node* lastWordStart = nullptr;
+            Node* current = list.getHead();
+            Node* prevMeaningful = nullptr;
+            bool inWord = false;
+
+            while (current) {
+                if (current->letter != ' ' && current->letter != '\n') {
+                    if (!inWord) {
+                        lastWordStart = current;
+                        inWord = true;
+                    }
+                    prevMeaningful = current;
+
+                } else {
+                    inWord = false;
+                }
+
+                current = current->next;
+            }
+
+            if (!prevMeaningful) {
+                word.clear();
+                return;
+            }
+
+            std::string newLastWord;
+            current = lastWordStart;
+
+            while (current && current != prevMeaningful->next) {
+                newLastWord += current->letter;
+                current = current->next;
+            }
+
+            word.clear();
+            for (char ch : newLastWord) {
+                word.enqueue(ch);
+            }
+        } else {
+            word.dequeue();
+        }
+    }
+}
+
+void Notepad::spellCheck() {
+    string wordStr;
+
+
+    while (!word.isEmpty()) {
+        wordStr += word.getFront();
+        word.dequeue();
+    }
+
+    // cout << "\nWord: " << wordStr << endl;
+    // getch();
+    //
+    // for (auto& ch : wordStr) {
+    //     list.deleteFromEnd();
+    // }
+    //
+    // string newStr;
+    //
+    // for (auto& ch : newStr) {
+    //     list.insertAtEnd(ch);
+    // }
+}
+
+string Notepad::listToString() {
+    string result;
+    Node* current = list.getHead();
+
+    while (current) {
+        result += current->letter;
+        current = current->next;
+    }
+
+    return result;
+}
+
+string Notepad::queueToString() {
+    string result;
+    Queue tempQueue(word);
+
+    while (!tempQueue.isEmpty()) {
+        result += tempQueue.getFront();
+        tempQueue.dequeue();
+    }
+
+    return result;
+}
+
+void Notepad::stringToQueue(const string& str) {
+    word.clear();
+
+    for (char ch : str) {
+        word.enqueue(ch);
+    }
 }
 
 void Notepad::writeCh(const char ch) {
-    list.insertAtEnd(ch);
+    if (isPrint(ch) || ch == '\n') {
+        cout << listToString() << endl;
+        notepadHistory.push(listToString());
+        wordHistory.push(queueToString());
+        list.insertAtEnd(ch);
+        word.enqueue(ch);
+        if (ch == ' ' || ch == '\n') {
+            spellCheck();
+        }
+    }
 }
 
 

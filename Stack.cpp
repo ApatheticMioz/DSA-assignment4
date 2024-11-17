@@ -1,11 +1,11 @@
 #include "Stack.h"
-#include "Node.h"
+#include "NodeStr.h"
 
-Stack::Stack() : head(nullptr) {}
+Stack::Stack() : head(nullptr), states(0) {}
 
 Stack::~Stack() {
     while (head) {
-        Node* temp = head;
+        NodeStr* temp = head;
         head = head->next;
         delete temp;
     }
@@ -15,8 +15,29 @@ bool Stack::isEmpty() const {
     return head == nullptr;
 }
 
-void Stack::push(const char letter) {
-    Node* newNode = new Node(letter);
+void Stack::push(const string& word) {
+    if (states > 20) {
+        NodeStr* current = head;
+        NodeStr* prev = nullptr;
+
+        while (current && current->next) {
+            prev = current;
+            current = current->next;
+        }
+
+        if (prev) {
+            prev->next = nullptr;
+            delete current;
+        } else {
+            delete head;
+            head = nullptr;
+        }
+
+        states--;
+    }
+
+    auto* newNode = new NodeStr(word);
+    states++;
 
     newNode->next = head;
     head = newNode;
@@ -27,15 +48,15 @@ void Stack::pop() {
         return;
     }
 
-    Node* temp = head;
+    NodeStr* temp = head;
     head = head->next;
 
     delete temp;
 }
 
-char Stack::peek() const {
-    if (isEmpty())
-        return head->letter;
+string Stack::peek() const {
+    if (!isEmpty())
+        return head->word;
 
-    return '\0';
+    return "";
 }

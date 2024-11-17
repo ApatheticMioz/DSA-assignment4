@@ -2,7 +2,6 @@
 #define QUEUE_H
 
 #include "Node.h"
-#include "Node.h"
 
 class Queue {
     Node* front;
@@ -13,6 +12,8 @@ public:
 
     ~Queue();
 
+    Queue(const Queue& other);
+
     bool isEmpty() const;
 
     void enqueue(char letter);
@@ -22,6 +23,8 @@ public:
     char getFront() const;
 
     char getRear() const;
+
+    void clear();
 };
 
 #endif //QUEUE_H

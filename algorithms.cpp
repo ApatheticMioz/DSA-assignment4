@@ -54,3 +54,7 @@ void mergeSort(string *arr, int left, int right) {
 int max(int a, int b) {
     return a > b ? a : b;
 }
+
+bool isPrint(int ch) {
+    return ch >= 32 && ch <= 127;
+}

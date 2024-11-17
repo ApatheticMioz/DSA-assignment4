@@ -14,6 +14,9 @@
 class Notepad {
     AVL_tree tree;
     Linked_list list;
+    Queue word;
+    Stack notepadHistory;
+    Stack wordHistory;
 
     int countLines(const string& filename);
 
@@ -22,6 +25,14 @@ class Notepad {
     void loadArray(const string& filename, string* arr, int size);
 
     void loadDict(TreeNode* &treeRoot);
+
+    void spellCheck();
+
+    string listToString();
+
+    string queueToString();
+
+    void stringToQueue(const string& str);
 
 public:
     Notepad();
@@ -38,7 +49,7 @@ public:
 
     void undo();
 
-    void writeCh(const char ch);
+    void writeCh(char ch);
 };
 
 #endif //NOTEPAD_H

@@ -1,11 +1,11 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "Node.h"
-#include "Node.h"
+#include "NodeStr.h"
 
 class Stack {
-    Node* head;
+    NodeStr* head;
+    int states;
 
 public:
     Stack();
@@ -14,11 +14,11 @@ public:
 
     bool isEmpty() const;
 
-    void push(char letter);
+    void push(const string& state);
 
     void pop();
 
-    char peek() const;
+    string peek() const;
 };
 
 #endif //STACK_H

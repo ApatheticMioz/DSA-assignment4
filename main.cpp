@@ -1,6 +1,8 @@
 #include <iostream>
 #include <conio.h>
+
 #include "Notepad.h"
+#include "algorithms.h"
 
 using namespace std;
 
@@ -16,7 +18,7 @@ int main() {
         cout << "\"Ctrl + L\" to load from a file." << endl;
         cout << "\"Backspace\" to delete a character." << endl;
         cout << "\"Ctrl + S\" to save to a file."<< endl;
-        cout << "\"Ctrl + Z\" to undo." << endl; // TODO
+        cout << "\"Ctrl + Z\" to undo (up to 20 undo supported)." << endl; // TODO
         cout << "\"Esc\" to quit." << endl << endl;
 
         notepad.display();
@@ -24,20 +26,44 @@ int main() {
         int ch = _getch();
 
         switch (ch) {
+            // QUIT
+            // ESC
+            // Ctrl + W
             case 27:
-
             case 23: {
-                // ESC
-                // CTRL + W
-                cout << "Exiting." << endl;
-                exit(0);
+                cout << "Do you want to save before exiting?" << endl;
+                cout << "1. Save and Exit" << endl;
+                cout << "2. Exit without Saving" << endl;
+                cout << "3. Cancel" << endl;
+
+                int choice = _getch();
+
+                switch (choice) {
+                    case '1': {
+                        notepad.saveFile();
+                        exit(0);
+                    }
+                    case '2': {
+                        exit(0);
+                    }
+                    case '3': {
+                        break;
+                    }
+                    default: {
+                        cout << "Invalid option. Returning to notepad." << endl;
+                        _getch();
+                        break;
+                    }
+                }
+
+                break;
             }
 
             case 12: {
                 // LOAD
                 // CTRL + L
                 cout << "\nCurrent file has been saved to \"save.txt\"" << endl;
-                notepad.saveFile(); // TODO
+                notepad.saveFile();
 
                 string filename;
                 cout << "Choose file to load text from. Enter nothing to load \"save.txt\"" << endl;
@@ -45,7 +71,7 @@ int main() {
                 cin >> filename;
 
                 filename = (filename.empty() ? "save.txt" : filename);
-                notepad.loadFile(filename); // TODO
+                notepad.loadFile(filename);
 
                 cout << "Press any key to continue" << endl;
                 getch();
@@ -57,7 +83,7 @@ int main() {
                 // SAVE
                 // CTRL + S
                 cout << "\nCurrent notepad is being saved to \"save.txt\"" << endl;
-                notepad.saveFile(); // TODO
+                notepad.saveFile();
 
                 cout << "Press any key to continue" << endl;
                 getch();
@@ -67,13 +93,13 @@ int main() {
 
             case 8: {
                 // BACKSPACE
-                notepad.deleteLast(); // TODO
+                notepad.deleteLast();
                 break;
             }
 
             case 26: {
                 // UNDO
-                notepad.undo(); // TODO
+                notepad.undo();
                 break;
             }
 
@@ -83,9 +109,9 @@ int main() {
             }
 
             default: {
-                if (isprint(ch) || ch == '\n') {
+                if (isPrint(ch) || ch == '\n') {
                     // WRITE CHARACTER
-                    notepad.writeCh(ch); // TODO
+                    notepad.writeCh(ch);
                 }
                 break;
             }

@@ -4,6 +4,22 @@
 Queue::Queue() : front(nullptr), rear(nullptr) {}
 
 Queue:: ~Queue() {
+    clear();
+}
+
+Queue::Queue(const Queue& other) : front(nullptr), rear(nullptr) {
+    if (other.isEmpty()) {
+        return;
+    }
+
+    Node* current = other.front;
+    while (current != nullptr) {
+        enqueue(current->letter);
+        current = current->next;
+    }
+}
+
+void Queue::clear() {
     while (front) {
         Node* temp = front;
         front = front->next;

@@ -10,4 +10,6 @@ void mergeSort(string *arr, int left, int right);
 
 int max(int a, int b);
 
+bool isPrint(int ch);
+
 #endif //ALGORITHMS_H
