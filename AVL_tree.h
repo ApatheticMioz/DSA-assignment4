@@ -17,25 +17,25 @@ public:
 class AVL_tree {
     Node* treeRoot;
 
-    int getHeight(Node* node);
+    int getHeight(Node* node) const;
 
-    int getBalance(Node* node);
+    int getBalance(Node* node) const;
 
     Node* rightRotate(Node* node);
 
     Node* leftRotate(Node* node);
 
-    Node* insertionRotations(Node* node, const string& key);
+    Node* insertionRotations(Node* node, const string& word);
 
-    Node* insert(Node* root, const string& key);
+    Node* insert(Node* root, const string& word);
 
     Node* getSuccessor(Node* current);
 
     Node* deletionRotations(Node* node);
 
-    Node* delNode(Node* root, const string& key);
+    Node* delNode(Node* root, const string& word);
 
-    bool search(Node* root, const string& key);
+    bool search(Node* root, const string& word);
 
     void inOrder(Node* root);
 
@@ -46,7 +46,7 @@ public:
 
     bool search(const string &word);
 
-    Node* delNode(const string &word);
+    void delNode(const string &word);
 
     void inOrder();
 };
