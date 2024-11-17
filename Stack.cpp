@@ -1,6 +1,5 @@
 #include "Stack.h"
-
-Node::Node(const char letter) : letter(letter), next(nullptr) {}
+#include "Node.h"
 
 Stack::Stack() : head(nullptr) {}
 

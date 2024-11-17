@@ -1,13 +1,7 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-class Node {
-public:
-    char letter;
-    Node* next;
-
-    explicit Node(char letter);
-};
+#include "Node.h"
 
 class Linked_list {
     Node* head;

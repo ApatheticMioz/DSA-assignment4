@@ -1,9 +1,8 @@
 #include "Linked_list.h"
 #include <iostream>
+#include "Node.h"
 
 using namespace std;
-
-Node::Node(const char letter) : letter(letter), next(nullptr) {}
 
 Linked_list::Linked_list() : head(nullptr) {}
 

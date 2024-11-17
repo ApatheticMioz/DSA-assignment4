@@ -2,49 +2,55 @@
 #define AVL_TREE_H
 
 #include <string>
+
+#include "Linked_list.h"
 using namespace std;
 
-class Node {
+class TreeNode {
 public:
     string word;
     int height;
-    Node* left;
-    Node* right;
+    TreeNode* left;
+    TreeNode* right;
 
-    explicit Node(const string &word);
+    explicit TreeNode(const string &word);
 };
 
+void updateHeight(TreeNode* node);
+
+int getHeight(TreeNode* node);
+
 class AVL_tree {
-    Node* treeRoot;
+    TreeNode* treeRoot;
 
-    void deleteTree(Node* root);
+    void deleteTree(TreeNode* root);
 
-    int getHeight(Node* node) const;
+    int getBalance(TreeNode* node) const;
 
-    int getBalance(Node* node) const;
+    TreeNode* rightRotate(TreeNode* node);
 
-    Node* rightRotate(Node* node);
+    TreeNode* leftRotate(TreeNode* node);
 
-    Node* leftRotate(Node* node);
+    TreeNode* insertionRotations(TreeNode* node, const string& word);
 
-    Node* insertionRotations(Node* node, const string& word);
+    TreeNode* insert(TreeNode* root, const string& word);
 
-    Node* insert(Node* root, const string& word);
+    TreeNode* getSuccessor(TreeNode* current);
 
-    Node* getSuccessor(Node* current);
+    TreeNode* deletionRotations(TreeNode* node);
 
-    Node* deletionRotations(Node* node);
+    TreeNode* delNode(TreeNode* root, const string& word);
 
-    Node* delNode(Node* root, const string& word);
+    bool search(TreeNode* root, const string& word);
 
-    bool search(Node* root, const string& word);
-
-    void inOrder(Node* root);
+    void inOrder(TreeNode* root);
 
 public:
     AVL_tree();
 
     ~AVL_tree();
+
+    TreeNode*& getRoot();
 
     void insert(const string &word);
 

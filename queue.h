@@ -1,13 +1,8 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-class Node {
-public:
-    char letter;
-    Node* next;
-
-    explicit Node(char letter);
-};
+#include "Node.h"
+#include "Node.h"
 
 class Queue {
     Node* front;

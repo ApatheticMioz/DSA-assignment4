@@ -1,6 +1,5 @@
 #include "queue.h"
-
-Node::Node(const char letter) : letter(letter), next(nullptr) {}
+#include "Node.h"
 
 Queue::Queue() : front(nullptr), rear(nullptr) {}
 

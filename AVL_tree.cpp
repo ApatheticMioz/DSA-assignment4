@@ -1,14 +1,15 @@
 #include "AVL_tree.h"
+#include "algorithms.h"
+
 #include <iostream>
 #include <string>
-#include <algorithm>
 using namespace std;
 
-Node::Node(const string& word) : word(word), height(1), left(nullptr), right(nullptr) {}
+TreeNode::TreeNode(const string& word) : word(word), height(1), left(nullptr), right(nullptr) {}
 
 AVL_tree::AVL_tree() : treeRoot(nullptr) {}
 
-void AVL_tree::deleteTree(Node *root) {
+void AVL_tree::deleteTree(TreeNode *root) {
     if (root == nullptr)
         return;
 
@@ -21,41 +22,53 @@ AVL_tree::~AVL_tree() {
     deleteTree(treeRoot);
 }
 
-int AVL_tree::getHeight(Node* node) const {
+TreeNode*& AVL_tree::getRoot() {
+    return treeRoot;
+}
+
+int getHeight(TreeNode* node) {
     if (node == nullptr)
         return 0;
 
     return node->height;
 }
 
-int AVL_tree::getBalance(Node* node) const {
+void updateHeight(TreeNode *node) {
+    if (node) {
+        node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+    }
+}
+
+int AVL_tree::getBalance(TreeNode* node) const {
     if (node == nullptr)
         return 0;
 
     return getHeight(node->left) - getHeight(node->right);
 }
 
-Node* AVL_tree::rightRotate(Node* node) {
-    Node* newNode = node->left;
+TreeNode* AVL_tree::rightRotate(TreeNode* node) {
+    TreeNode* newNode = node->left;
     node->left = newNode->right;
     newNode->right = node;
 
-    node->height = 1 + max(getHeight(node->left), getHeight(node->right)) + 1;
-    newNode->height = 1 + max(getHeight(newNode->left), getHeight(newNode->right)) + 1;
+    updateHeight(node);
+    updateHeight(newNode);
 
     return newNode;
 }
 
-Node* AVL_tree::leftRotate(Node* node) {
-    Node* newNode = node->right;
+TreeNode* AVL_tree::leftRotate(TreeNode* node) {
+    TreeNode* newNode = node->right;
     node->right = newNode->left;
     newNode->left = node;
 
-    node->height = 1 + max(getHeight(node->left), getHeight(node->right)) + 1;
-    newNode->height = 1 + max(getHeight(newNode->left), getHeight(newNode->right)) + 1;
+    updateHeight(node);
+    updateHeight(newNode);
+
+    return newNode;
 }
 
-Node* AVL_tree::insertionRotations(Node* node, const string& word) {
+TreeNode* AVL_tree::insertionRotations(TreeNode* node, const string& word) {
     const int balance = getBalance(node);
 
     // Left Left Case
@@ -81,9 +94,9 @@ Node* AVL_tree::insertionRotations(Node* node, const string& word) {
     return node;
 }
 
-Node* AVL_tree::insert(Node* root, const string& word) {
+TreeNode* AVL_tree::insert(TreeNode* root, const string& word) {
     if (root == nullptr)
-        return new Node(word);
+        return new TreeNode(word);
 
     if (word < root->word)
         root->left = insert(root->left, word);
@@ -92,7 +105,7 @@ Node* AVL_tree::insert(Node* root, const string& word) {
     else
         return root;
 
-    root->height = 1 + max(getHeight(root->left), getHeight(root->right));
+    updateHeight(root);
 
     return insertionRotations(root, word);
 }
@@ -101,7 +114,7 @@ void AVL_tree::insert(const string &word) {
     treeRoot = insert(treeRoot, word);
 }
 
-bool AVL_tree::search(Node* root, const string &word) {
+bool AVL_tree::search(TreeNode* root, const string &word) {
     if (root == nullptr) {
         return false;
     }
@@ -121,7 +134,7 @@ bool AVL_tree::search(const string &word) {
     return search(treeRoot, word);
 }
 
-Node *AVL_tree::getSuccessor(Node *current) {
+TreeNode *AVL_tree::getSuccessor(TreeNode *current) {
     current = current->right;
     while (current != nullptr && current->left != nullptr)
         current = current->left;
@@ -129,7 +142,7 @@ Node *AVL_tree::getSuccessor(Node *current) {
     return current;
 }
 
-Node *AVL_tree::deletionRotations(Node *node) {
+TreeNode *AVL_tree::deletionRotations(TreeNode *node) {
     const int balance = getBalance(node);
 
     // Left Left Case
@@ -155,7 +168,7 @@ Node *AVL_tree::deletionRotations(Node *node) {
     return node;
 }
 
-Node* AVL_tree::delNode(Node* root, const string& word) {
+TreeNode* AVL_tree::delNode(TreeNode* root, const string& word) {
     if (root == nullptr)
         return root;
 
@@ -165,15 +178,15 @@ Node* AVL_tree::delNode(Node* root, const string& word) {
         root->right = delNode(root->right, word);
     else {
         if (root->left == nullptr) {
-            Node* temp = root->right;
+            TreeNode* temp = root->right;
             delete root;
             root = temp;
         } else if (root->right == nullptr) {
-            Node* temp = root->left;
+            TreeNode* temp = root->left;
             delete root;
             root = temp;
         } else {
-            Node* successor = getSuccessor(root);
+            TreeNode* successor = getSuccessor(root);
             root->word = successor->word;
             root->right = delNode(root->right, successor->word);
         }
@@ -182,7 +195,7 @@ Node* AVL_tree::delNode(Node* root, const string& word) {
     if (root == nullptr)
         return root;
 
-    root->height = 1 + max(getHeight(root->left), getHeight(root->right));
+    updateHeight(root);
 
     return deletionRotations(root);
 }
@@ -191,7 +204,7 @@ void AVL_tree::delNode(const string &word) {
     treeRoot = delNode(treeRoot, word);
 }
 
-void AVL_tree::inOrder(Node* root) {
+void AVL_tree::inOrder(TreeNode* root) {
     if (root == nullptr)
         return;
 
