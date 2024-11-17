@@ -79,14 +79,13 @@ string substitution(const string& word, AVL_tree& tree) {
         char end = isupper(originalChar) ? 'Z' : 'z';
 
         for (char c = start; c <= end; c++) {
-            modifiedWord[i] = c; // Replace the character
-            //cout << "Trying substitution: " << modifiedWord << endl; // Debug line
-            if (tree.search(modifiedWord)) { // Check if the modified word exists
+            modifiedWord[i] = c;
+            if (tree.search(modifiedWord)) {
                 return modifiedWord;
             }
         }
 
-        modifiedWord[i] = originalChar; // Restore the original character
+        modifiedWord[i] = originalChar;
     }
 
     return "Not found";
@@ -95,10 +94,10 @@ string substitution(const string& word, AVL_tree& tree) {
 string subStr(const string& str, int start, int length) {
     string result;
 
-    if (start >= str.length()) return ""; // If start is out of bounds, return an empty string
+    if (start >= str.length()) return "";
 
     if (length == 0 || start + length > str.length()) {
-        length = str.length() - start; // Adjust length to go to the end of the string
+        length = str.length() - start;
     }
 
     for (int i = start; i < start + length; i++) {
@@ -111,7 +110,6 @@ string subStr(const string& str, int start, int length) {
 
 string omission(const string& word, AVL_tree& tree) {
     for (int i = 0; i < word.length(); i++) {
-        // Omit the i-th character
         string modifiedWord = word.substr(0, i) + word.substr(i + 1);
 
         if (tree.search(modifiedWord)) {
@@ -128,7 +126,6 @@ string insertion(const string& word, AVL_tree& tree) {
         char end = isupper(word[0]) ? 'Z' : 'z';
 
         for (char c = start; c <= end; c++) {
-            // Insert character 'c' at position i
             string modifiedWord = word.substr(0, i) + c + word.substr(i);
 
             if (tree.search(modifiedWord)) {
@@ -141,19 +138,18 @@ string insertion(const string& word, AVL_tree& tree) {
 }
 
 string reversal(const string& word, AVL_tree& tree) {
-    if (word.length() < 2) return "Not found"; // Nothing to reverse if the word has less than 2 characters
+    if (word.length() < 2)
+        return "Not found";
 
     string modifiedWord = word;
 
     for (int i = 0; i < word.length() - 1; i++) {
-        // Swap adjacent characters
         swap(modifiedWord[i], modifiedWord[i + 1]);
 
         if (tree.search(modifiedWord)) {
             return modifiedWord;
         }
 
-        // Swap back to restore the original word
         swap(modifiedWord[i], modifiedWord[i + 1]);
     }
 
