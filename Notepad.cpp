@@ -41,7 +41,7 @@ TreeNode *Notepad::buildAVLFromArray(string *arr, int start, int end) {
         return nullptr;
 
     int mid = start + (end - start) / 2;
-    TreeNode* root = new TreeNode(arr[mid]);
+    auto* root = new TreeNode(arr[mid]);
 
     root->left = buildAVLFromArray(arr, start, mid - 1);
     root->right = buildAVLFromArray(arr, mid + 1, end);
@@ -55,7 +55,6 @@ void Notepad::loadDict(TreeNode* &treeRoot) {
     string filename = "dictionary.txt";
 
     int wordCount = countLines(filename);
-    cout << "Word count: " << wordCount << endl;
 
     auto* words = new string[wordCount];
     loadArray(filename, words, wordCount);
@@ -64,15 +63,9 @@ void Notepad::loadDict(TreeNode* &treeRoot) {
 
     treeRoot = buildAVLFromArray(words, 0, wordCount - 1);
 
-    cout << "Tree built successfully. Root word: "
-         << (treeRoot ? treeRoot->word : "null") << endl;
-
     delete[] words;
 }
 
 void Notepad::initialise() {
     loadDict(tree.getRoot());
-
-    tree.inOrder();
-    cout << endl;
 }
