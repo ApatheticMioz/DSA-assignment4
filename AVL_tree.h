@@ -17,6 +17,8 @@ public:
 class AVL_tree {
     Node* treeRoot;
 
+    void deleteTree(Node* root);
+
     int getHeight(Node* node) const;
 
     int getBalance(Node* node) const;
@@ -41,6 +43,8 @@ class AVL_tree {
 
 public:
     AVL_tree();
+
+    ~AVL_tree();
 
     void insert(const string &word);
 

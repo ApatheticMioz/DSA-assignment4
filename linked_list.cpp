@@ -1,23 +1,31 @@
-#include "linked_list.h"
+#include "Linked_list.h"
 #include <iostream>
 
 using namespace std;
 
 Node::Node(const char letter) : letter(letter), next(nullptr) {}
 
-linked_list::linked_list() : head(nullptr) {}
+Linked_list::Linked_list() : head(nullptr) {}
 
-bool linked_list::isEmpty() const {
+Linked_list::~Linked_list() {
+    while (head) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
+
+bool Linked_list::isEmpty() const {
     return head == nullptr;
 }
 
-void linked_list::insertAtBeginning(const char letter) {
+void Linked_list::insertAtBeginning(const char letter) {
     auto newNode = new Node(letter);
     newNode->next = head;
     head = newNode;
 }
 
-void linked_list::insertAtEnd(const char letter) {
+void Linked_list::insertAtEnd(const char letter) {
     auto newNode = new Node(letter);
 
     if (isEmpty()) {
@@ -33,7 +41,7 @@ void linked_list::insertAtEnd(const char letter) {
     temp->next = newNode;
 }
 
-void linked_list::insertAtPosition(const char letter, const int position) {
+void Linked_list::insertAtPosition(const char letter, const int position) {
     if (position < 1) {
         return;
     }
@@ -59,7 +67,7 @@ void linked_list::insertAtPosition(const char letter, const int position) {
     temp->next = newNode;
 }
 
-void linked_list::deleteFromBeginning() {
+void Linked_list::deleteFromBeginning() {
     if (isEmpty()) {
         return;
     }
@@ -69,7 +77,7 @@ void linked_list::deleteFromBeginning() {
     delete temp;
 }
 
-void linked_list::deleteFromEnd() {
+void Linked_list::deleteFromEnd() {
     if (isEmpty()) {
         return;
     }
@@ -89,7 +97,7 @@ void linked_list::deleteFromEnd() {
     temp->next = nullptr;
 }
 
-void linked_list::deleteFromPosition(const int position) {
+void Linked_list::deleteFromPosition(const int position) {
     if (position < 1) {
         return;
     }
@@ -113,7 +121,7 @@ void linked_list::deleteFromPosition(const int position) {
     delete nodeToDelete;
 }
 
-void linked_list::display() const {
+void Linked_list::display() const {
     if (isEmpty()) {
         return;
     }

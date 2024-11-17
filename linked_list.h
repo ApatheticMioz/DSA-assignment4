@@ -9,11 +9,13 @@ public:
     explicit Node(char letter);
 };
 
-class linked_list {
+class Linked_list {
     Node* head;
 
 public:
-    linked_list();
+    Linked_list();
+
+    ~Linked_list();
 
     bool isEmpty() const;
 

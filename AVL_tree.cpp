@@ -8,6 +8,19 @@ Node::Node(const string& word) : word(word), height(1), left(nullptr), right(nul
 
 AVL_tree::AVL_tree() : treeRoot(nullptr) {}
 
+void AVL_tree::deleteTree(Node *root) {
+    if (root == nullptr)
+        return;
+
+    deleteTree(root->left);
+    deleteTree(root->right);
+    delete root;
+}
+
+AVL_tree::~AVL_tree() {
+    deleteTree(treeRoot);
+}
+
 int AVL_tree::getHeight(Node* node) const {
     if (node == nullptr)
         return 0;
