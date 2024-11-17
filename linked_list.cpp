@@ -1,8 +1,18 @@
+// Muhammad Abdullah Ali
+// i23-2523
+// Section A
+// Department of Data Science
+// Data Structures
+// Assignment #4
+
 #include "Linked_list.h"
 #include <iostream>
 #include "Node.h"
 
 using namespace std;
+
+// The documentation is provided in the header file "Linked_list.h"
+// Comments/documentation is added in this source file where necessary
 
 Linked_list::Linked_list() : head(nullptr) {}
 

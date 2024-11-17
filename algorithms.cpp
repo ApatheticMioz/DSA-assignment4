@@ -1,9 +1,19 @@
+// Muhammad Abdullah Ali
+// i23-2523
+// Section A
+// Department of Data Science
+// Data Structures
+// Assignment #4
+
 #include <string>
 #include <iostream>
 
 #include "algorithms.h"
 
 using namespace std;
+
+// The documentation is provided in the header file "algorithms.h"
+// Comments/documentation is added in this source file where necessary
 
 void merge(string *arr, int left, int mid, int right) {
     int n1 = mid - left + 1;

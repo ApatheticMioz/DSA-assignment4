@@ -1,3 +1,10 @@
+// Muhammad Abdullah Ali
+// i23-2523
+// Section A
+// Department of Data Science
+// Data Structures
+// Assignment #4
+
 #include "Notepad.h"
 #include "algorithms.h"
 
@@ -6,6 +13,9 @@
 #include <sstream>
 #include <fstream>
 #include <conio.h>
+
+// The documentation is provided in the header file "Notepad.h"
+// Comments/documentation is added in this source file where necessary
 
 Notepad::Notepad() = default;
 
@@ -140,6 +150,8 @@ void Notepad::deleteLast() {
 
         list.deleteFromEnd();
 
+        // If the user deletes enough characters to empty the last word, then
+        // we find the next new last word
         if (word.isEmpty()) {
             Node* lastWordStart = nullptr;
             Node* current = list.getHead();
@@ -187,9 +199,7 @@ void Notepad::deleteLast() {
 string Notepad::strip(const string& str) {
     string result;
 
-    // Iterate over the string
     for (int i = 0; i < str.length(); i++) {
-        // Add character to str only if it's not a space or newline
         if (str[i] != ' ' && str[i] != '\n') {
             result += str[i];
         }

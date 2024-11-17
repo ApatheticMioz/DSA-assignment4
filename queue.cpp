@@ -1,5 +1,15 @@
+// Muhammad Abdullah Ali
+// i23-2523
+// Section A
+// Department of Data Science
+// Data Structures
+// Assignment #4
+
 #include "queue.h"
 #include "Node.h"
+
+// The documentation is provided in the header file "Queue.h"
+// Comments/documentation is added in this source file where necessary
 
 Queue::Queue() : front(nullptr), rear(nullptr) {}
 

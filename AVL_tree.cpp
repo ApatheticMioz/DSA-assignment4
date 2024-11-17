@@ -1,9 +1,19 @@
+// Muhammad Abdullah Ali
+// i23-2523
+// Section A
+// Department of Data Science
+// Data Structures
+// Assignment #4
+
 #include "AVL_tree.h"
 #include "algorithms.h"
 
 #include <iostream>
 #include <string>
 using namespace std;
+
+// The documentation is provided in the header file "AVL_tree.h"
+// Comments/documentation is added in this source file where necessary
 
 TreeNode::TreeNode(const string& word) : word(word), height(1), left(nullptr), right(nullptr) {}
 

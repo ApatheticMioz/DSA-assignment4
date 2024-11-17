@@ -1,3 +1,10 @@
+// Muhammad Abdullah Ali
+// i23-2523
+// Section A
+// Department of Data Science
+// Data Structures
+// Assignment #4
+
 #include <iostream>
 #include <conio.h>
 
@@ -5,6 +12,19 @@
 #include "algorithms.h"
 
 using namespace std;
+
+/*
+ * The following program is an implementation of a console based notepad.
+ * "conio.h" library is used for input handling, it was required for special inputs like:
+ *      Ctrl + S : Save
+ *      Ctrl + L : Load
+ *      etc.
+ *
+ * The program walks the user through with the controls and explanation.
+ * It is simple to use, just press your buttons and use whichever commands you want to!
+ *
+ * Further documentation in header files/source files.
+ */
 
 int main() {
     Notepad notepad;
@@ -119,6 +139,7 @@ int main() {
             }
         }
 
+        // Clear the screen
         system("cls");
     }
 }
