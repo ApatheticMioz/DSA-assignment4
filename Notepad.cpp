@@ -66,6 +66,63 @@ void Notepad::loadDict(TreeNode* &treeRoot) {
     delete[] words;
 }
 
-void Notepad::initialise() {
+void Notepad::initialiseDict() {
     loadDict(tree.getRoot());
 }
+
+void Notepad::display() const {
+    list.display();
+}
+
+void Notepad::loadFile(const string& filename) {
+    ifstream file(filename);
+
+    if (!file) {
+        cerr << "Error opening file " << filename << endl;
+        return;
+    }
+
+    list.delList();
+
+    char ch;
+    while (file.get(ch)) {
+        list.insertAtEnd(ch);
+    }
+
+    file.close();
+}
+
+void Notepad::saveFile() {
+    ofstream file("save.txt");
+
+    if (!file) {
+        cerr << "Error creating or opening file " << "save.txt" << endl;
+    }
+
+    Node* current = list.getHead();
+    while (current) {
+        file.put(current->letter);
+        current = current->next;
+    }
+
+    file.close();
+
+    cout << "File saved as save.txt" << endl;
+}
+
+void Notepad::undo() {
+
+}
+
+void Notepad::deleteLast() {
+
+}
+
+void Notepad::writeCh(const char ch) {
+    list.insertAtEnd(ch);
+}
+
+
+
+
+

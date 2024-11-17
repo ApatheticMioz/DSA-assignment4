@@ -11,6 +11,10 @@ public:
 
     ~Linked_list();
 
+    void delList();
+
+    Node* getHead() const;
+
     bool isEmpty() const;
 
     void insertAtBeginning(char letter);

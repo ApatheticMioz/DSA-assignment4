@@ -7,11 +7,19 @@ using namespace std;
 Linked_list::Linked_list() : head(nullptr) {}
 
 Linked_list::~Linked_list() {
+    delList();
+}
+
+void Linked_list::delList() {
     while (head) {
         Node* temp = head;
         head = head->next;
         delete temp;
     }
+}
+
+Node* Linked_list::getHead() const {
+    return head;
 }
 
 bool Linked_list::isEmpty() const {

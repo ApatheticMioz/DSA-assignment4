@@ -26,7 +26,19 @@ class Notepad {
 public:
     Notepad();
 
-    void initialise();
+    void initialiseDict();
+
+    void display() const;
+
+    void loadFile(const string& filename);
+
+    void saveFile();
+
+    void deleteLast();
+
+    void undo();
+
+    void writeCh(const char ch);
 };
 
 #endif //NOTEPAD_H
