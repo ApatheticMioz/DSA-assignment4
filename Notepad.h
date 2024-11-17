@@ -28,6 +28,8 @@ class Notepad {
 
     void spellCheck();
 
+    string strip(const string& str);
+
     string listToString();
 
     string queueToString();

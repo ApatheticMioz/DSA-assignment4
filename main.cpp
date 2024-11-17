@@ -29,7 +29,9 @@ int main() {
             // QUIT
             // ESC
             // Ctrl + W
-            case 27:
+            case 27: {
+                exit(0);
+            }
             case 23: {
                 cout << "Do you want to save before exiting?" << endl;
                 cout << "1. Save and Exit" << endl;

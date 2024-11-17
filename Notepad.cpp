@@ -184,27 +184,94 @@ void Notepad::deleteLast() {
     }
 }
 
+string Notepad::strip(const string& str) {
+    string result;
+
+    // Iterate over the string
+    for (int i = 0; i < str.length(); i++) {
+        // Add character to str only if it's not a space or newline
+        if (str[i] != ' ' && str[i] != '\n') {
+            result += str[i];
+        }
+    }
+
+    return result;
+}
+
 void Notepad::spellCheck() {
     string wordStr;
-
 
     while (!word.isEmpty()) {
         wordStr += word.getFront();
         word.dequeue();
     }
 
-    // cout << "\nWord: " << wordStr << endl;
-    // getch();
-    //
-    // for (auto& ch : wordStr) {
-    //     list.deleteFromEnd();
-    // }
-    //
-    // string newStr;
-    //
-    // for (auto& ch : newStr) {
-    //     list.insertAtEnd(ch);
-    // }
+    wordStr = strip(wordStr);
+
+    stringToQueue(wordStr);
+
+    if (tree.search(wordStr)) {
+        return;
+    }
+
+    string sub = substitution(wordStr, tree);      // SUBSTITUTION
+    string om = omission(wordStr, tree);           // OMISSION
+    string ins = insertion(wordStr, tree);         // INSERTION
+    string rev = reversal(wordStr, tree);          // REVERSAL
+
+    cout << "\n\nYou have entered a word that does not exist in the dictionary." << endl;
+    cout << "Word: " << wordStr << endl;
+
+    auto* validWords = new string[4];
+    int count = 0;
+
+    if (sub != "Not found")
+        validWords[count++] = sub;
+
+    if (om != "Not found")
+        validWords[count++] = om;
+
+    if (ins != "Not found")
+        validWords[count++] = ins;
+
+    if (rev != "Not found")
+        validWords[count++] = rev;
+
+    if (count == 0) {
+        cout << "\nNo valid suggestions found for the word: " << wordStr << endl;
+        delete[] validWords;
+        return;
+    }
+
+    cout << "You can choose to replace it with the following words, which have been calculated using 4 techniques." << endl;
+    cout << "Substitution, omission, insertion, reversal." << endl;
+    cout << "\nOptions:\n";
+    for (int i = 0; i < count; i++) {
+        cout << i + 1 << ". " << validWords[i] << endl;
+    }
+
+    int choice;
+    do {
+        cout << "Choose a valid word by entering the corresponding number: ";
+        cin >> choice;
+        if (choice < 1 || choice > count) {
+            cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice < 1 || choice > count);
+
+    string chosenWord = validWords[choice - 1];
+
+    delete[] validWords;
+
+    for (auto& ch : wordStr) {
+        list.deleteFromEnd();
+    }
+
+    list.deleteFromEnd();
+
+    for (auto& ch : chosenWord) {
+        list.insertAtEnd(ch);
+    }
 }
 
 string Notepad::listToString() {
@@ -241,13 +308,15 @@ void Notepad::stringToQueue(const string& str) {
 
 void Notepad::writeCh(const char ch) {
     if (isPrint(ch) || ch == '\n') {
-        cout << listToString() << endl;
         notepadHistory.push(listToString());
         wordHistory.push(queueToString());
         list.insertAtEnd(ch);
-        word.enqueue(ch);
+
         if (ch == ' ' || ch == '\n') {
             spellCheck();
+            word.clear();
+        } else {
+            word.enqueue(ch);
         }
     }
 }
