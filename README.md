@@ -33,8 +33,8 @@ The dictionary is stored in an AVL tree for efficient O(log n) lookups, ensuring
 
 ### Prerequisites
 
-- C++ compiler with C++11 support (g++, clang++, or MSVC)
-- Windows environment (uses `conio.h` for keyboard input)
+- C++ compiler with C++11 support (g++ on Windows, or MSVC)
+- **Windows environment required** - The application uses `conio.h` for keyboard input handling (`_getch()`), which is Windows-specific
 
 ### Compilation
 
@@ -56,9 +56,8 @@ Create a `dictionary.txt` file in the same directory as the executable, with one
 
 Run the compiled executable:
 
-```bash
-./notepad      # Linux/macOS (requires conio.h alternative)
-notepad.exe    # Windows
+```cmd
+notepad.exe
 ```
 
 ### Controls
