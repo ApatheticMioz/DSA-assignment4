@@ -1,9 +1,4 @@
-// Muhammad Abdullah Ali
-// i23-2523
-// Section A
-// Department of Data Science
 // Data Structures
-// Assignment #4
 
 #ifndef NOTEPAD_H
 #define NOTEPAD_H
