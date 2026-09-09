@@ -85,7 +85,7 @@ This project was originally developed as a Data Structures assignment demonstrat
 
 ## Author
 
-Muhammad Abdullah Ali
+ApatheticMioz
 
 ## License
 
